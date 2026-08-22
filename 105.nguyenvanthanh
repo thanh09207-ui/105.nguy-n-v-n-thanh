@@ -1,0 +1,163 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// ======================
+// KHAI BAO LOP NHAN VIEN
+// ======================
+class NhanVien
+{
+private:
+    string maNV;
+    string hoTen;
+    double luong;
+
+public:
+    void nhap()
+    {
+        cout << "Nhap ma nhan vien: ";
+        cin >> maNV;
+
+        cin.ignore();
+
+        cout << "Nhap ho ten: ";
+        getline(cin, hoTen);
+
+        cout << "Nhap luong: ";
+        cin >> luong;
+    }
+
+    void xuat()
+    {
+        cout << "Ma NV: " << maNV << endl;
+        cout << "Ho ten: " << hoTen << endl;
+        cout << "Luong: " << luong << endl;
+    }
+};
+
+// ======================
+// HAM MAIN
+// ======================
+int main()
+{
+    // ==================================================
+    // CACH 1: DUNG MANG TINH
+    // ==================================================
+
+    cout << "\n========================================";
+    cout << "\n       CACH 1: MANG TINH";
+    cout << "\n========================================\n";
+
+    NhanVien dsnv1[10];
+
+    // Nhap
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "\n--- Nhap nhan vien thu " << i + 1 << " ---\n";
+        dsnv1[i].nhap();
+    }
+
+    // Xuat
+    cout << "\n\n===== DANH SACH NHAN VIEN =====\n";
+
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "\n--- Nhan vien thu " << i + 1 << " ---\n";
+        dsnv1[i].xuat();
+    }
+
+
+    // ==================================================
+    // CACH 2: DUNG MANG DONG
+    // ==================================================
+
+    cout << "\n\n========================================";
+    cout << "\n       CACH 2: MANG DONG";
+    cout << "\n========================================\n";
+
+    NhanVien *dsnv2;
+
+    // Cap phat 10 doi tuong
+    dsnv2 = new NhanVien[10];
+
+    // Nhap
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "\n--- Nhap nhan vien thu " << i + 1 << " ---\n";
+        dsnv2[i].nhap();
+    }
+
+    // Xuat
+    cout << "\n\n===== DANH SACH NHAN VIEN =====\n";
+
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "\n--- Nhan vien thu " << i + 1 << " ---\n";
+        dsnv2[i].xuat();
+    }
+
+    // Giai phong bo nho
+    delete[] dsnv2;
+
+
+    // ==================================================
+    // CACH 3: DUNG VECTOR
+    // ==================================================
+
+    cout << "\n\n========================================";
+    cout << "\n       CACH 3: VECTOR";
+    cout << "\n========================================\n";
+
+    vector<NhanVien> dsnv3;
+
+    // Nhap
+    for (int i = 0; i < 10; i++)
+    {
+        NhanVien nv;
+
+        cout << "\n--- Nhap nhan vien thu " << i + 1 << " ---\n";
+
+        nv.nhap();
+
+        // Them nhan vien vao vector
+        dsnv3.push_back(nv);
+    }
+
+    // Xuat
+    cout << "\n\n===== DANH SACH NHAN VIEN =====\n";
+
+    for (int i = 0; i < dsnv3.size(); i++)
+    {
+        cout << "\n--- Nhan vien thu " << i + 1 << " ---\n";
+        dsnv3[i].xuat();
+    }
+
+
+    // ==================================================
+    // SO SANH
+    // ==================================================
+
+    cout << "\n\n========================================";
+    cout << "\n             SO SANH 3 CACH";
+    cout << "\n========================================\n";
+
+    cout << "\n1. Mang tinh:";
+    cout << "\n   - Kich thuoc co dinh.";
+    cout << "\n   - Cu phap don gian.";
+    cout << "\n   - Khong can cap phat/giai phong bo nho thu cong.";
+
+    cout << "\n\n2. Mang dong:";
+    cout << "\n   - Su dung new de cap phat bo nho.";
+    cout << "\n   - Co the xac dinh kich thuoc khi chuong trinh chay.";
+    cout << "\n   - Phai dung delete[] de giai phong bo nho.";
+
+    cout << "\n\n3. Vector:";
+    cout << "\n   - Kich thuoc co the thay doi.";
+    cout << "\n   - Them phan tu bang push_back().";
+    cout << "\n   - Tu dong quan ly bo nho.";
+    cout << "\n   - De su dung va linh hoat nhat.";
+
+    return 0;
+}
