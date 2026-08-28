@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+
+class MaTran
+{
+private:
+    int m, n;
+    int a[100][100];
+
+public:
+    // Ham nhap
+    void nhap()
+    {
+        cout << "Nhap so hang: ";
+        cin >> m;
+
+        cout << "Nhap so cot: ";
+        cin >> n;
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                cout << "a[" << i << "][" << j << "] = ";
+                cin >> a[i][j];
+            }
+        }
+    }
+
+    // Ham xuat
+    void xuat()
+    {
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                cout << a[i][j] << "\t";
+            }
+            cout << endl;
+        }
+    }
+
+    // Khai bao ham ban
+    friend MaTran cong(MaTran A, MaTran B);
+};
+
+// Ham ban
+MaTran cong(MaTran A, MaTran B)
+{
+    MaTran C;
+
+    C.m = A.m;
+    C.n = A.n;
+
+    for (int i = 0; i < C.m; i++)
+    {
+        for (int j = 0; j < C.n; j++)
+        {
+            C.a[i][j] = A.a[i][j] + B.a[i][j];
+        }
+    }
+
+    return C;
+}
+
+int main()
+{
+    MaTran A, B, C;
+
+    cout << "===== NHAP MA TRAN A =====" << endl;
+    A.nhap();
+
+    cout << "\n===== NHAP MA TRAN B =====" << endl;
+    B.nhap();
+
+    // Goi ham ban de cong A va B
+    C = cong(A, B);
+
+    cout << "\n===== MA TRAN A =====" << endl;
+    A.xuat();
+
+    cout << "\n===== MA TRAN B =====" << endl;
+    B.xuat();
+
+    cout << "\n===== MA TRAN A + B =====" << endl;
+    C.xuat();
+
+    return 0;
+}
