@@ -1,0 +1,141 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class MonHoc
+{
+protected:
+    string tenMon;
+    float diemCC;
+    float diemKT;
+    float diemDT;
+
+public:
+
+   
+    void nhap()
+    {
+        cout << "Nhap ten mon hoc: ";
+        getline(cin, tenMon);
+
+        cout << "Nhap diem chuyen can: ";
+        cin >> diemCC;
+
+        cout << "Nhap diem kiem tra: ";
+        cin >> diemKT;
+
+        cout << "Nhap diem thi: ";
+        cin >> diemDT;
+
+        cin.ignore();
+    }
+
+
+    float tinhDiemHocPhan()
+    {
+        return diemCC * 0.1 + diemKT * 0.3 + diemDT * 0.6;
+    }
+
+
+    void xuat()
+    {
+        cout << "Ten mon hoc: " << tenMon << endl;
+        cout << "Diem chuyen can: " << diemCC << endl;
+        cout << "Diem kiem tra: " << diemKT << endl;
+        cout << "Diem thi: " << diemDT << endl;
+        cout << "Diem hoc phan: " << tinhDiemHocPhan() << endl;
+    }
+};
+
+
+
+class SinhVien : public MonHoc
+{
+private:
+    string hoTen;
+    string lop;
+    string maSV;
+
+public:
+
+  
+    void nhap()
+    {
+        cout << "Nhap ho ten: ";
+        getline(cin, hoTen);
+
+        cout << "Nhap lop: ";
+        getline(cin, lop);
+
+        cout << "Nhap ma sinh vien: ";
+        getline(cin, maSV);
+
+        // Goi ham nhap cua lop MonHoc
+        MonHoc::nhap();
+    }
+
+
+    void xuat()
+    {
+        cout << "Ho ten: " << hoTen << endl;
+        cout << "Lop: " << lop << endl;
+        cout << "Ma sinh vien: " << maSV << endl;
+
+     
+        MonHoc::xuat();
+    }
+
+   
+    bool biCamThi()
+    {
+        if (diemCC < 5 || diemKT == 0)
+            return true;
+        else
+            return false;
+    }
+};
+
+
+int main()
+{
+    int n;
+
+    cout << "Nhap so luong sinh vien: ";
+    cin >> n;
+    cin.ignore();
+
+    SinhVien ds[100];
+
+  
+    cout << "\n===== NHAP DANH SACH SINH VIEN =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\n--- Sinh vien thu " << i + 1 << " ---\n";
+        ds[i].nhap();
+    }
+
+ 
+    cout << "\n===== DANH SACH SINH VIEN BI CAM THI =====\n";
+
+    bool co = false;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (ds[i].biCamThi())
+        {
+            cout << "\n--- Sinh vien bi cam thi ---\n";
+            ds[i].xuat();
+
+            co = true;
+        }
+    }
+
+    if (co == false)
+    {
+        cout << "Khong co sinh vien nao bi cam thi.\n";
+    }
+
+    return 0;
+}
