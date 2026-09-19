@@ -1,0 +1,120 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Nguoi
+{
+protected:
+    string hoTen;
+    int namSinh;
+
+public:
+
+    void nhap()
+    {
+        cout << "Nhap ho ten: ";
+        getline(cin, hoTen);
+
+        cout << "Nhap nam sinh: ";
+        cin >> namSinh;
+        cin.ignore();
+    }
+
+
+    void xuat()
+    {
+        cout << "Ho ten: " << hoTen << endl;
+        cout << "Nam sinh: " << namSinh << endl;
+    }
+};
+
+class SinhVien : public Nguoi
+{
+private:
+    string maSV;
+    float diemTB;
+
+public:
+
+    void nhap()
+    {
+  
+        Nguoi::nhap();
+
+        cout << "Nhap ma sinh vien: ";
+        getline(cin, maSV);
+
+        cout << "Nhap diem trung binh: ";
+        cin >> diemTB;
+        cin.ignore();
+    }
+
+ 
+    void xuat()
+    {
+        Nguoi::xuat();
+
+        cout << "Ma sinh vien: " << maSV << endl;
+        cout << "Diem trung binh: " << diemTB << endl;
+    }
+
+
+    string getMaSV()
+    {
+        return maSV;
+    }
+
+
+    string getHoTen()
+    {
+        return hoTen;
+    }
+};
+
+
+int main()
+{
+    int n;
+
+    cout << "Nhap so luong sinh vien n = ";
+    cin >> n;
+    cin.ignore();
+
+    SinhVien ds[100];
+
+    cout << "\n===== NHAP DANH SACH SINH VIEN =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\n--- Sinh vien thu " << i + 1 << " ---\n";
+        ds[i].nhap();
+    }
+
+    string tuKhoa;
+
+    cout << "\n===== TIM KIEM SINH VIEN =====\n";
+    cout << "Nhap ma sinh vien hoac ho ten can tim: ";
+    getline(cin, tuKhoa);
+
+    bool timThay = false;
+
+
+    for (int i = 0; i < n; i++)
+    {
+        if (ds[i].getMaSV() == tuKhoa ||
+            ds[i].getHoTen() == tuKhoa)
+        {
+            cout << "\n===== SINH VIEN TIM THAY =====\n";
+            ds[i].xuat();
+
+            timThay = true;
+        }
+    }
+
+    if (timThay == false)
+    {
+        cout << "\nKhong tim thay sinh vien!\n";
+    }
+
+    return 0;
+}
