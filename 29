@@ -1,0 +1,165 @@
+#include <iostream>
+using namespace std;
+
+// ============================
+// LOP PS1
+// ============================
+class PS1
+{
+protected:
+    int tu;
+    int mau;
+
+public:
+
+    // Ham nhap phan so
+    void nhap()
+    {
+        cout << "Nhap tu so: ";
+        cin >> tu;
+
+        do
+        {
+            cout << "Nhap mau so (khac 0): ";
+            cin >> mau;
+
+            if (mau == 0)
+                cout << "Mau so phai khac 0!\n";
+
+        } while (mau == 0);
+    }
+
+    // Ham tim UCLN
+    int UCLN(int a, int b)
+    {
+        if (a < 0)
+            a = -a;
+
+        if (b < 0)
+            b = -b;
+
+        while (b != 0)
+        {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+
+        return a;
+    }
+
+    // Ham toi gian phan so
+    void toiGian()
+    {
+        int u = UCLN(tu, mau);
+
+        tu = tu / u;
+        mau = mau / u;
+
+        // Dua dau am len tu
+        if (mau < 0)
+        {
+            tu = -tu;
+            mau = -mau;
+        }
+    }
+
+    // Ham xuat phan so
+    void xuat()
+    {
+        toiGian();
+
+        if (mau == 1)
+            cout << tu;
+        else
+            cout << tu << "/" << mau;
+    }
+};
+
+
+// ============================
+// LOP PS2 KE THUA PS1
+// ============================
+class PS2 : public PS1
+{
+public:
+
+    // Nap chong toan tu =
+    PS2& operator=(const PS2& p)
+    {
+        tu = p.tu;
+        mau = p.mau;
+
+        return *this;
+    }
+
+    // Nap chong toan tu >
+    bool operator>(const PS2& p)
+    {
+        return tu * p.mau > p.tu * mau;
+    }
+};
+
+
+// ============================
+// HAM MAIN
+// ============================
+int main()
+{
+    int n;
+
+    cout << "Nhap so luong phan so (toi da 10): ";
+    cin >> n;
+
+    while (n < 1 || n > 10)
+    {
+        cout << "Nhap lai n (1 <= n <= 10): ";
+        cin >> n;
+    }
+
+    PS2 ds[10];
+
+    // ============================
+    // NHAP DANH SACH
+    // ============================
+    cout << "\n===== NHAP DANH SACH =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\nPhan so thu " << i + 1 << ":\n";
+        ds[i].nhap();
+    }
+
+    // ============================
+    // SAP XEP GIAM DAN
+    // ============================
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (ds[j] > ds[i])
+            {
+                PS2 tam;
+
+                tam = ds[i];
+                ds[i] = ds[j];
+                ds[j] = tam;
+            }
+        }
+    }
+
+    // ============================
+    // IN KET QUA
+    // ============================
+    cout << "\n===== DANH SACH SAU KHI SAP XEP GIAM DAN =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        ds[i].xuat();
+        cout << " ";
+    }
+
+    cout << endl;
+
+    return 0;
+}
