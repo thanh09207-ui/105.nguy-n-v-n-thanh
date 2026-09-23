@@ -1,0 +1,146 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// ============================
+// LOP SP1
+// ============================
+class SP1
+{
+protected:
+    float phanThuc;
+    float phanAo;
+
+public:
+
+    // Ham tao mac dinh
+    SP1()
+    {
+        phanThuc = 0;
+        phanAo = 0;
+    }
+
+    // Ham tao co tham so
+    SP1(float thuc, float ao)
+    {
+        phanThuc = thuc;
+        phanAo = ao;
+    }
+
+    // Ham nhap
+    void nhap()
+    {
+        cout << "Nhap phan thuc: ";
+        cin >> phanThuc;
+
+        cout << "Nhap phan ao: ";
+        cin >> phanAo;
+    }
+
+    // Ham xuat
+    void xuat()
+    {
+        cout << phanThuc;
+
+        if (phanAo >= 0)
+            cout << " + " << phanAo << "i";
+        else
+            cout << " - " << -phanAo << "i";
+    }
+
+    // Ham tinh module
+    float module()
+    {
+        return sqrt(phanThuc * phanThuc +
+                    phanAo * phanAo);
+    }
+};
+
+
+// ============================
+// LOP SP2 KE THUA SP1
+// ============================
+class SP2 : public SP1
+{
+public:
+
+    // Nap chong toan tu =
+    SP2& operator=(const SP2& p)
+    {
+        phanThuc = p.phanThuc;
+        phanAo = p.phanAo;
+
+        return *this;
+    }
+
+    // Nap chong toan tu >
+    // So sanh theo module
+    bool operator>(const SP2& p)
+    {
+        return module() > p.module();
+    }
+};
+
+
+// ============================
+// HAM MAIN
+// ============================
+int main()
+{
+    int n;
+
+    cout << "Nhap so luong so phuc (toi da 10): ";
+    cin >> n;
+
+    while (n < 1 || n > 10)
+    {
+        cout << "Nhap lai n (1 <= n <= 10): ";
+        cin >> n;
+    }
+
+    SP2 ds[10];
+
+    // ============================
+    // NHAP DANH SACH
+    // ============================
+    cout << "\n===== NHAP DANH SACH SO PHUC =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\nSo phuc thu " << i + 1 << ":\n";
+        ds[i].nhap();
+    }
+
+    // ============================
+    // SAP XEP GIAM DAN THEO MODULE
+    // ============================
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (ds[j] > ds[i])
+            {
+                SP2 tam;
+
+                tam = ds[i];
+                ds[i] = ds[j];
+                ds[j] = tam;
+            }
+        }
+    }
+
+    // ============================
+    // IN KET QUA
+    // ============================
+    cout << "\n===== DANH SACH GIAM DAN THEO MODULE =====\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        ds[i].xuat();
+
+        cout << "   | Module = "
+             << ds[i].module() << endl;
+    }
+
+    return 0;
+}
